@@ -1,11 +1,11 @@
 import Banner from "@/components/home/Banner";
-import StartShipping from "@/components/home/StartShipping";
+import SecondSection from "@/components/home/SecondSection";
 
 export default function Home() {
   return (
     <div className="">
       <Banner  />
-      {/* <StartShipping /> */}
+      <SecondSection />
     </div>
   );
 }

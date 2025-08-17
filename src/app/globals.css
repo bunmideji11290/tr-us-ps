@@ -50,8 +50,16 @@
   justify-content: center;
   text-align: center;
   border: 1px solid #333366;
-  background: linear-gradient(90deg, #333366 0%, #333366 48%, #333366 70%, #333366);
+  background: #333366;
   border-radius: 50%;
+}
+.step .circleAlert{
+border: 2px solid #dc2626;
+}
+
+.step.active .circleAlert::after{
+  background-color: #dc2626;
+  border: 1px solid #dc2626;
 }
 
 .vertical-progress-container::before {
@@ -62,7 +70,7 @@
   bottom: 0;
   width: 8px;
   height: 100%;
-  background: linear-gradient(90deg, #333366 0%, #333366 48%, #333366 70%, #333366);
+  background: #333366;
   z-index: -1;
 }
 /* 

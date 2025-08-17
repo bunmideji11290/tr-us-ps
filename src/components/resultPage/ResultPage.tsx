@@ -17,6 +17,7 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
   const [currentStep, setCurrentStep] = useState<number>(-1);
   const [hasOnHold, setHasOnHold] = useState<boolean>(false);
   const [onHoldTimeReached, setOnHoldTimeReached] = useState<boolean>(false);
+  const [onDeliveryAlertReached, setOnDeliveryAlertReached] = useState<boolean>(false);
 
   // Update current time every minute
   useEffect(() => {
@@ -26,13 +27,17 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
     return () => clearInterval(interval);
   }, []);
 
-  // Check if on hold time has been reached
+  // Check if on hold time and delivery alert time have been reached
   useEffect(() => {
     if (packageInfo.on_hold_date && packageInfo.on_hold_time) {
       const onHoldDateTime = new Date(`${packageInfo.on_hold_date}T${packageInfo.on_hold_time}`);
       setOnHoldTimeReached(currentTime >= onHoldDateTime);
     }
-  }, [currentTime, packageInfo.on_hold_date, packageInfo.on_hold_time]);
+    if (packageInfo.delivery_alert_date && packageInfo.delivery_alert_time) {
+      const onDeliveryAlertDateTime = new Date(`${packageInfo.delivery_alert_date}T${packageInfo.delivery_alert_time}`);
+      setOnDeliveryAlertReached(currentTime >= onDeliveryAlertDateTime);
+    }
+  }, [currentTime, packageInfo.on_hold_date, packageInfo.on_hold_time, packageInfo.delivery_alert_date, packageInfo.delivery_alert_time]);
 
   const steps = useMemo(() => {
     const formatDatetime = (date: string | undefined, time: string | undefined) => {
@@ -56,8 +61,9 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
 
     // Conditionally add 'Delivered' if not on hold
     const isOnHoldActive = !!packageInfo.on_hold_date && !!packageInfo.on_hold_time && onHoldTimeReached;
+    const isDeliveryAlertActive = !!packageInfo.delivery_alert_date && !!packageInfo.delivery_alert_time && onDeliveryAlertReached;
 
-    if (!isOnHoldActive) {
+    if (!isOnHoldActive && !isDeliveryAlertActive) {
       rawSteps.push({
         label: 'Delivered',
         datetime: formatDatetime(packageInfo.estimated_delivery_date, packageInfo.estimated_delivery_time)
@@ -77,13 +83,24 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
       });
     }
 
+    // Include "Delivery Alert" if applicable and time has been reached
+    const hasDeliveryAlertData = !!packageInfo.delivery_alert_date && !!packageInfo.delivery_alert_time;
+    const deliveryAlertDatetime = hasDeliveryAlertData && onDeliveryAlertReached ? formatDatetime(packageInfo.delivery_alert_date, packageInfo.delivery_alert_time) : null;
+
+    if (deliveryAlertDatetime) {
+      stepsWithDatetime.push({
+        label: 'Alert',
+        datetime: deliveryAlertDatetime
+      });
+    }
+
     // Sort all steps by datetime ascending
     return stepsWithDatetime.sort((a, b) => {
       const aTime = new Date(a.datetime!).getTime();
       const bTime = new Date(b.datetime!).getTime();
       return aTime - bTime;
     });
-  }, [packageInfo, onHoldTimeReached]);
+  }, [packageInfo, onHoldTimeReached, onDeliveryAlertReached]);
 
   const calculateStep = useCallback(() => {
     const now = currentTime.getTime();
@@ -165,9 +182,9 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
           <div className="vertical-progress-container">
             {steps.map((step, index) => (
               <div key={index} className={`step ${index <= currentStep ? 'active' : ''}`}>
-                <div className="circle"></div>
+                <div className={`circle ${step.label === 'Alert' ? "circleAlert" : ""}`}></div>
                 <div className="content">
-                  <p className="label text-base font-semibold uppercase">{step.label}</p>
+                  <p className={`label text-base font-semibold uppercase ${step.label === 'Alert' ? "text-red-600" : ""}`}>{step.label}</p>
                   {step.datetime && (
                     <p className="text-sm flex flex-col mt-1">
                       {formatDate(step.datetime)}
@@ -176,6 +193,12 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
                   )}
                   {step.label === 'On Hold' && packageInfo.on_hold_desc && <div className="max-w-[300px] mt-2 p-3 text-red-500 text-sm bg-yellow-100 rounded">{packageInfo.on_hold_desc}</div>}
                   {step.label === 'Delivered' && packageInfo.delivery_note && <div className="max-w-[300px] mt-2 p-3 text-white text-sm bg-sky-900 rounded">{packageInfo.delivery_note}</div>}
+                  {step.label === 'Alert' && packageInfo.alert_note && (
+                    <div className="max-w-[300px] mt-2 p-3 border-l-8 border-l-red-600 text-black text-sm bg-[#ffdbdb]">
+                      <h3 className='text-red-600 font-semibold mb-1'>Latest Update</h3>
+                      <p>{packageInfo.alert_note}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

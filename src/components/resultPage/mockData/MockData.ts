@@ -140,7 +140,9 @@ export const mockPackages: Package[] = [
     on_hold_desc: '',
     estimated_delivery_date: '2025-07-12',
     estimated_delivery_time: '23:35:00',
-    delivery_note: 'Note: good returned to originator no one picked it up',
+    delivery_alert_date: '2025-07-12',
+    delivery_alert_time: '23:35:00',
+    alert_note: 'Note: good returned to originator no one picked it up',
     time_zone: 'America/Chicago'
   }
 ];

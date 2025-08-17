@@ -94,5 +94,53 @@ export const mockPackages: Package[] = [
     estimated_delivery_date: '2025-06-24',
     estimated_delivery_time: '23:35:00',
     time_zone: 'America/Chicago'
+  },
+  {
+    package_id: 'PKG003',
+    sender: {
+      name: 'Natlane',
+      address: 'East Hampton, New York (NY), US',
+      contact_number: '******',
+      email: '******'
+    },
+    recipient: {
+      name: 'Arthur',
+      address: 'Wilshire Blvd. 350, Beverly Hills, CA',
+      contact_number: '******',
+      email: '******'
+    },
+    tracking_number: 'DFCE0085E34',
+    package_details: {
+      weight_kg: 10,
+      dimensions_cm: {
+        length: 30,
+        width: 20,
+        height: 15
+      },
+      courier: 'USPS',
+      packages: 'Box',
+      quantity: '1',
+      paymentMode: 'Cash',
+      origin: 'East Hampton, NY',
+      destination: 'Beverly Hills, CA',
+      comment: 'Handle with care',
+      status: 'Out for delivery',
+      mode: 'Road',
+      value_usd: 50.0
+    },
+    // Y-M-D
+    package_received_date: '2025-07-10',
+    package_received_time: '19:35:00',
+    in_transit_date: '2025-07-11',
+    in_transit_time: '21:00:00',
+    out_for_delivery_date: '2025-07-12',
+    out_for_delivery_time: '14:00:00',
+    on_hold_date: '',
+    on_hold_time: '',
+    on_hold_desc: '',
+    estimated_delivery_date: '2025-07-12',
+    estimated_delivery_time: '23:35:00',
+    delivery_note: 'Note: good returned to originator no one picked it up',
+    time_zone: 'America/Chicago'
   }
 ];

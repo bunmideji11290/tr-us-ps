@@ -43,6 +43,7 @@ export interface Package {
   on_hold_desc?: string;
   estimated_delivery_date: string;
   estimated_delivery_time: string;
+  delivery_note?: string;
   pickup_date?: string;
   pickup_time?: string;
   time_zone?: string;

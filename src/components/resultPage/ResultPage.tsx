@@ -41,7 +41,7 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
 
     let rawSteps = [
       {
-        label: 'Package Received By FEDEX',
+        label: 'Package Received By USPS',
         datetime: formatDatetime(packageInfo.package_received_date, packageInfo.package_received_time)
       },
       {
@@ -175,6 +175,7 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
                     </p>
                   )}
                   {step.label === 'On Hold' && packageInfo.on_hold_desc && <div className="max-w-[300px] mt-2 p-3 text-red-500 text-sm bg-yellow-100 rounded">{packageInfo.on_hold_desc}</div>}
+                  {step.label === 'Delivered' && packageInfo.delivery_note && <div className="max-w-[300px] mt-2 p-3 text-white text-sm bg-sky-900 rounded">{packageInfo.delivery_note}</div>}
                 </div>
               </div>
             ))}
@@ -208,11 +209,11 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="bg-white text-[#333333] border">
-                      <td className="px-4 py-2 w-[200px]">{packageInfo.sender.name}</td>
-                      <td className="px-4 py-2 w-[200px]">{packageInfo.sender.contact_number}</td>
-                      <td className="px-4 py-2 w-[300px]">{packageInfo.sender.address}</td>
-                      <td className="px-4 py-2 w-[200px]">{packageInfo.sender.email}</td>
+                    <tr className="bg-white text-nowrap text-[#333333] border">
+                      <td className="p-4 w-[200px]">{packageInfo.sender.name}</td>
+                      <td className="p-4 w-[200px]">{packageInfo.sender.contact_number}</td>
+                      <td className="p-4 w-[300px]">{packageInfo.sender.address}</td>
+                      <td className="p-4 w-[200px]">{packageInfo.sender.email}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -247,11 +248,11 @@ export default function ResultPage({ packageInfo }: ResultPageProps) {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="bg-white text-[#333333] border">
-                      <td className="px-4 py-2 w-[200px]">{packageInfo.recipient.name}</td>
-                      <td className="px-4 py-2 w-[200px]">{packageInfo.recipient.contact_number}</td>
-                      <td className="px-4 py-2 w-[300px]">{packageInfo.recipient.address}</td>
-                      <td className="px-4 py-2 w-[200px]">{packageInfo.recipient.email}</td>
+                    <tr className="bg-white text-nowrap text-[#333333] border">
+                      <td className="p-4 w-[200px]">{packageInfo.recipient.name}</td>
+                      <td className="p-4 w-[200px]">{packageInfo.recipient.contact_number}</td>
+                      <td className="p-4 w-[300px]">{packageInfo.recipient.address}</td>
+                      <td className="p-4 w-[200px]">{packageInfo.recipient.email}</td>
                     </tr>
                   </tbody>
                 </table>

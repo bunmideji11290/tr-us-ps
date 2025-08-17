@@ -29,7 +29,7 @@ export default function Header() {
           <div className="header bg-white p-4">
             <div className="mx-auto flex min-h-[35px] max-w-[1150px] items-center">
               <div className="flex items-center justify-between w-full">
-                <Image src={logoSvg} width={200} height={200} alt="Logo" />
+                <Image src={logoSvg} width={200} height={200} className="w-[150px] h-[40px]" alt="Logo" />
                 <FiSearch />
               </div>
             </div>

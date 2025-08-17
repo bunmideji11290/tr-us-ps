@@ -50,7 +50,7 @@
   justify-content: center;
   text-align: center;
   border: 1px solid #333366;
-  background: linear-gradient(90deg, #333366 0%, #333366 48%, #ffe57f 70%, #fff0b2);
+  background: linear-gradient(90deg, #333366 0%, #333366 48%, #333366 70%, #333366);
   border-radius: 50%;
 }
 
@@ -62,7 +62,7 @@
   bottom: 0;
   width: 8px;
   height: 100%;
-  background: linear-gradient(90deg, #333366 0%, #333366 48%, #ffe57f 70%, #fff0b2);
+  background: linear-gradient(90deg, #333366 0%, #333366 48%, #333366 70%, #333366);
   z-index: -1;
 }
 /* 
@@ -75,7 +75,7 @@
   width: 10px;
 } */
 .bg-gradient {
-  background: linear-gradient(90deg, #333366 0%, #333366 48%, #ffe57f 70%, #fff0b2);
+  background: linear-gradient(90deg, #333366 0%, #333366 48%, #333366 70%, #333366);
 }
 
 .shape-box {
